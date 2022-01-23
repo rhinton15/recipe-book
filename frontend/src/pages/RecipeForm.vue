@@ -82,18 +82,10 @@ export default {
   },
   methods: {
     async submit() {
-      const method = this.$props.recipeId ? "PUT" : "POST";
-      let url = process.env.VUE_APP_API_URL + "/recipe/";
-      if (this.$props.recipeId) {
-        url += this.$props.recipeId;
-      }
-      await fetch(url, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.$store.getters.token,
-        },
-        body: JSON.stringify({ ...this.recipe }),
+      const action = this.isEditing ? "edit" : "add";
+      await this.$store.dispatch("recipes/" + action + "Recipe", {
+        recipeId: this.$props.recipeId,
+        body: this.recipe,
       });
       this.$router.replace("/recipes");
     },
@@ -114,11 +106,14 @@ export default {
   },
   computed: {
     submitButtonCaption() {
-      return (!this.$props.recipeId ? "Add" : "Update") + " Recipe";
+      return (!this.isEditing ? "Add" : "Update") + " Recipe";
+    },
+    isEditing() {
+      return !!this.$props.recipeId;
     },
   },
   async beforeMount() {
-    if (this.$props.recipeId) {
+    if (this.isEditing) {
       const response = await fetch(
         process.env.VUE_APP_API_URL + "/recipe/" + this.$props.recipeId,
         { headers: { Authorization: "Bearer " + this.$store.getters.token } }

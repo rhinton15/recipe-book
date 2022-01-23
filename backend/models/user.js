@@ -15,6 +15,43 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  menu: [
+    {
+      date: Date,
+      meals: {
+        breakfast: [
+          {
+            title: String,
+            recipeId: {
+              type: Schema.Types.ObjectId,
+              ref: "Recipe",
+              required: true,
+            },
+          },
+        ],
+        lunch: [
+          {
+            title: String,
+            recipeId: {
+              type: Schema.Types.ObjectId,
+              ref: "Recipe",
+              required: true,
+            },
+          },
+        ],
+        dinner: [
+          {
+            title: String,
+            recipeId: {
+              type: Schema.Types.ObjectId,
+              ref: "Recipe",
+              required: true,
+            },
+          },
+        ],
+      },
+    },
+  ],
 });
 
 module.exports = mongoose.model("User", userSchema);

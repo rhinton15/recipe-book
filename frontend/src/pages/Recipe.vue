@@ -78,19 +78,11 @@ export default {
     async deleteRecipe() {
       this.isLoading = true;
       try {
-        const response = await fetch(
-          process.env.VUE_APP_API_URL + "/recipe/" + this.$props.recipeId,
-          {
-            method: "DELETE",
-            headers: { Authorization: "Bearer " + this.$store.getters.token },
-          }
-        );
+        await this.$store.dispatch("recipes/deleteRecipe", {
+          recipeId: this.$props.recipeId,
+        });
         this.isLoading = false;
-        if (response.status === 200) {
-          this.$router.replace("/recipes");
-        } else {
-          // warning about failure to delete
-        }
+        this.$router.replace("/recipes");
       } catch (err) {
         console.log(err);
       }

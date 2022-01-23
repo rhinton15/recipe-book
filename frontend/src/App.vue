@@ -18,6 +18,7 @@ export default {
   },
   created() {
     this.$store.dispatch("tryLogin");
+    this.$store.dispatch("recipes/loadRecipes");
   },
   watch: {
     didAutoLogout(newValue, oldValue) {
@@ -97,6 +98,21 @@ main {
 
 .free-height {
   height: initial;
+}
+
+ul {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+li {
+  list-style: none;
+}
+
+.btn:active,
+.btn:hover,
+.btn:focus {
+  box-shadow: none !important;
 }
 
 @media print {

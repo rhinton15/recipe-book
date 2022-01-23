@@ -20,6 +20,11 @@
         <li v-if="isLoggedIn" class="nav-item">
           <base-button mode="underline" to="/recipes">My Recipes</base-button>
         </li>
+        <li v-if="isLoggedIn" class="nav-item">
+          <base-button mode="underline" to="/meal-planner"
+            >Meal Planner</base-button
+          >
+        </li>
         <li v-if="!isLoggedIn" class="nav-item">
           <base-button mode="underline" to="/login">Login</base-button>
         </li>
@@ -40,6 +45,11 @@
       <li v-if="isLoggedIn" class="mobile-nav-item">
         <base-button mode="underline" to="/recipes" @click="toggleShowNav"
           >My Recipes</base-button
+        >
+      </li>
+      <li v-if="isLoggedIn" class="mobile-nav-item">
+        <base-button mode="underline" to="/meal-planner" @click="toggleShowNav"
+          >Meal Planner</base-button
         >
       </li>
       <li v-if="!isLoggedIn" class="mobile-nav-item">
@@ -97,7 +107,7 @@ nav {
 p {
   font-size: 30px;
   color: white;
-  margin: 0;
+  margin: 0 10px;
 }
 
 ul {

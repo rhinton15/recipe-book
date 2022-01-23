@@ -8,6 +8,7 @@ const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO
 const app = express();
 
 const mainRoutes = require("./routes/main");
+const mealPlannerRoutes = require("./routes/meal-planner");
 const authRoutes = require("./routes/auth");
 
 app.use(bodyParser.json());
@@ -25,9 +26,11 @@ app.use((req, res, next) => {
 });
 
 app.use(mainRoutes);
+app.use(mealPlannerRoutes);
 app.use(authRoutes);
 
 app.use((error, req, res, next) => {
+  console.log(error);
   res.status(error.statusCode || 500).json({ message: error.message });
 });
 

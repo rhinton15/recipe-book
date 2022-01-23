@@ -1,6 +1,5 @@
 <template>
-  <base-spinner v-if="isLoading"></base-spinner>
-  <div v-else-if="recipes && recipes.length === 0">
+  <div v-if="recipes && recipes.length === 0">
     <p>You have no recipes :(</p>
     <base-button to="/new-recipe">Add one</base-button>
   </div>
@@ -15,28 +14,10 @@ import RecipeList from "../components/recipe/RecipeList.vue";
 
 export default {
   components: { RecipeList },
-  data() {
-    return {
-      recipes: [],
-      isLoading: true,
-    };
-  },
-  async beforeMount() {
-    try {
-      const response = await fetch(
-        process.env.VUE_APP_API_URL + "/my-recipes",
-        {
-          headers: {
-            Authorization: "Bearer " + this.$store.getters.token,
-          },
-        }
-      );
-      const { recipes } = await response.json();
-      this.recipes = recipes;
-    } catch (err) {
-      console.log(err);
-    }
-    this.isLoading = false;
+  computed: {
+    recipes() {
+      return this.$store.getters["recipes/myRecipes"];
+    },
   },
 };
 </script>

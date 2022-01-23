@@ -15,7 +15,9 @@ exports.getRecipes = async (req, res, next) => {
     let recipes = await Recipe.find().sort({ title: 1 });
     recipes = recipes.map((recipe) => {
       return {
-        ...recipe._doc,
+        _id: recipe._id,
+        userId: recipe.userId.toString(),
+        title: recipe.title,
         imageUrl: recipe.imageUrl || defaultImage,
       };
     });
@@ -30,7 +32,8 @@ exports.getMyRecipes = async (req, res, next) => {
     let recipes = await Recipe.find({ userId: req.userId }).sort({ title: 1 });
     recipes = recipes.map((recipe) => {
       return {
-        ...recipe._doc,
+        _id: recipe._id,
+        title: recipe.title,
         imageUrl: recipe.imageUrl || defaultImage,
       };
     });
@@ -58,7 +61,7 @@ exports.deleteRecipe = async (req, res, next) => {
   const recipeId = req.params.recipeId;
   try {
     await Recipe.deleteOne({ _id: recipeId });
-    res.status(200).json({ message: "Success!" });
+    res.status(200).json({ recipeId });
   } catch (error) {
     next(error);
   }
